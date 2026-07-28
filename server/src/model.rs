@@ -17,29 +17,25 @@ impl KannadaTtsModel {
         })
     }
 
-    pub fn synthesize(&self, token_ids: &[i64]) -> Result<Vec<f32>, Box<dyn std::error::Error>> {
+    pub fn synthesize(
+        &mut self,
+        token_ids: &[i64],
+    ) -> Result<Vec<f32>, Box<dyn std::error::Error>> {
         // Create input tensor: shape (1, seq_len)
-        let input_shape = vec![1, token_ids.len() as i64];
         let input_array = Array2::from_shape_vec(
             (1, token_ids.len()),
             token_ids.to_vec(),
         )?;
-        
+
         // Run inference
-        let outputs = self.session.run(ort::inputs![TensorRef::from_array_view(&input_array)?])?;
+        let outputs = self.session.run(
+            ort::inputs![TensorRef::from_array_view(&input_array)?]
+        )?;
 
-        // Extract waveform from output
-        // MMS-TTS outputs "waveform" tensor of shape (1, audio_length)
-        let waveform_tensor = outputs[0].try_extract_tensor::<f32>()?;
-        let waveform_view = waveform_tensor.view();
-        
-        // Flatten to 1D
-        let waveform: Vec<f32> = waveform_view
-            .into_iter()
-            .cloned()
-            .collect();
+        // Output is (&Shape, &[f32])
+        let (_shape, waveform) = outputs[0].try_extract_tensor::<f32>()?;
 
-        Ok(waveform)
+        Ok(waveform.to_vec())
     }
 
     pub fn get_sample_rate(&self) -> u32 {

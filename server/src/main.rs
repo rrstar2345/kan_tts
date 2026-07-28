@@ -1,6 +1,7 @@
 mod handlers;
 mod model;
 mod tokenizer;
+mod state;
 
 use axum::{
     // extract::State,
@@ -9,6 +10,8 @@ use axum::{
     Router,
 };
 use std::sync::Arc;
+use state::AppState;
+use tokio::sync::Mutex;
 use tracing_subscriber;
 
 #[tokio::main]
@@ -28,13 +31,29 @@ async fn main() {
         }
     };
 
-    let model = Arc::new(model);
+    let tokenizer = match tokenizer::KannadaTokenizer::new(
+        "./models/tokenizer.json",
+    ) {
+        Ok(t) => {
+            tracing::info!("✓ Tokenizer loaded successfully");
+            t
+        }
+        Err(e) => {
+            tracing::error!("✗ Failed to load tokenizer: {}", e);
+            std::process::exit(1);
+        }
+    };
+
+    let state = Arc::new(AppState {
+        model: Mutex::new(model),
+        tokenizer,
+    });
 
     // Build router
     let app = Router::new()
         .route("/health", get(handlers::health))
         .route("/synthesize", post(handlers::synthesize))
-        .with_state(model);
+        .with_state(state);
 
     // Start server
     let listener = tokio::net::TcpListener::bind("127.0.0.1:8080")
