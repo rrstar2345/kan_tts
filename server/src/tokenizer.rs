@@ -18,6 +18,12 @@ impl KannadaTokenizer {
         let tokenizer = Tokenizer::from_file(tokenizer_path.as_ref())
             .map_err(|e| format!("Failed to load tokenizer: {e}"))?;
 
+        tracing::info!("tokenizer loaded: vocab_size={}", tokenizer.get_vocab_size(true));
+        tracing::info!("tokenizer: id_to_token(0)={:?}", tokenizer.id_to_token(0));
+        tracing::info!("tokenizer: id_to_token(75)={:?}", tokenizer.id_to_token(75));
+        tracing::info!("tokenizer: token_to_id(')={:?}", tokenizer.token_to_id("'"));
+        tracing::info!("tokenizer: token_to_id(<unk>)={:?}", tokenizer.token_to_id("<unk>"));
+
         Ok(Self { tokenizer })
     }
 
@@ -36,6 +42,10 @@ impl KannadaTokenizer {
             .iter()
             .map(|&id| id as i64)
             .collect::<Vec<_>>();
+
+        tracing::info!("tokenize: input text={:?}", text);
+        tracing::info!("tokenize: tokens={:?}", encoding.get_tokens());
+        tracing::info!("tokenize: ids={:?} len={}", ids, ids.len());
 
         if ids.is_empty() {
             return Err("Tokenizer produced no tokens".into());
