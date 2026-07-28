@@ -1,0 +1,133 @@
+{
+    "version": "1.0",
+    "truncation": null,
+    "padding": null,
+    "added_tokens": [
+        {
+            "id": 75,
+            "content": "<unk>",
+            "single_word": false,
+            "lstrip": false,
+            "rstrip": false,
+            "normalized": false,
+            "special": true
+        }
+    ],
+    "normalizer": {
+        "type": "Sequence",
+        "normalizers": [
+            {
+                "type": "Lowercase"
+            },
+            {
+                "type": "Replace",
+                "pattern": {
+                    "Regex": "[^'\u0c93\u0cae\u0c86\u0cad\u0c8b\u0c9a\u0c9f\u0cc1\u0cc7\u0c9c\u0c8f\u0cbe\u0caa\u0cb6\u0ccd\u0c88\u0c94\u0c9e1\u0ca8\u0c8e\u0cb8\u0cb5\u0c87\u0c985\u0c8a\u0cb3\u0c96\u0cc3\u0cc6\\-\u0ca4\u0c9d\u0ca2 \u0c85\u0ca7\u0ccc\u0cb9\u0caf9\u0cab\u0c9b86\u0cb2\u0ca3_\u0ca6\u0cac\u0ca0\u0ca1\u0c833\u0ccb\u0c82\u0c92\u0cc0\u0c95\u0cbf\u0ca5\u0cb0\u0cc2\u0c90\u0cc8\u0c8920\u0c97\u0cca\u0cb747]"
+                },
+                "content": ""
+            },
+            {
+                "type": "Strip",
+                "strip_left": true,
+                "strip_right": true
+            },
+            {
+                "type": "Replace",
+                "pattern": {
+                    "Regex": "(?=.)|(?<!^)$"
+                },
+                "content": "'"
+            }
+        ]
+    },
+    "pre_tokenizer": {
+        "type": "Split",
+        "pattern": {
+            "Regex": ""
+        },
+        "behavior": "Isolated",
+        "invert": false
+    },
+    "post_processor": null,
+    "decoder": null,
+    "model": {
+        "vocab": {
+            "'": 0,
+            "\u0c93": 1,
+            "\u0cae": 2,
+            "\u0c86": 3,
+            "\u0cad": 4,
+            "\u0c8b": 5,
+            "\u0c9a": 6,
+            "\u0c9f": 7,
+            "\u0cc1": 8,
+            "\u0cc7": 9,
+            "\u0c9c": 10,
+            "\u0c8f": 11,
+            "\u0cbe": 12,
+            "\u0caa": 13,
+            "\u0cb6": 14,
+            "\u0ccd": 15,
+            "\u0c88": 16,
+            "\u0c94": 17,
+            "\u0c9e": 18,
+            "1": 19,
+            "\u0ca8": 20,
+            "\u0c8e": 21,
+            "\u0cb8": 22,
+            "\u0cb5": 23,
+            "\u0c87": 24,
+            "\u0c98": 25,
+            "5": 26,
+            "\u0c8a": 27,
+            "\u0cb3": 28,
+            "\u0c96": 29,
+            "\u0cc3": 30,
+            "\u0cc6": 31,
+            "-": 32,
+            "\u0ca4": 33,
+            "\u0c9d": 34,
+            "\u0ca2": 35,
+            " ": 36,
+            "\u0c85": 37,
+            "\u0ca7": 38,
+            "\u0ccc": 39,
+            "\u0cb9": 40,
+            "\u0caf": 41,
+            "9": 42,
+            "\u0cab": 43,
+            "\u0c9b": 44,
+            "8": 45,
+            "6": 46,
+            "\u0cb2": 47,
+            "\u0ca3": 48,
+            "_": 49,
+            "\u0ca6": 50,
+            "\u0cac": 51,
+            "\u0ca0": 52,
+            "\u0ca1": 53,
+            "\u0c83": 54,
+            "3": 55,
+            "\u0ccb": 56,
+            "\u0c82": 57,
+            "\u0c92": 58,
+            "\u0cc0": 59,
+            "\u0c95": 60,
+            "\u0cbf": 61,
+            "\u0ca5": 62,
+            "\u0cb0": 63,
+            "\u0cc2": 64,
+            "\u0c90": 65,
+            "\u0cc8": 66,
+            "\u0c89": 67,
+            "2": 68,
+            "0": 69,
+            "\u0c97": 70,
+            "\u0cca": 71,
+            "\u0cb7": 72,
+            "4": 73,
+            "7": 74,
+            "<unk>": 75
+        }
+    }
+}
